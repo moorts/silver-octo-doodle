@@ -24,6 +24,82 @@ public class Event {
     }
 
     public String getId() {
-        return this.id;
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public String getKategorie() {
+        return kategorie;
+    }
+
+    public void setKategorie(String kategorie) {
+        this.kategorie = kategorie;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnde() {
+        return ende;
+    }
+
+    public void setEnde(Date ende) {
+        this.ende = ende;
+    }
+
+    public int getErwarteteBesucherzahl() {
+        return erwarteteBesucherzahl;
+    }
+
+    public void setErwarteteBesucherzahl(int erwarteteBesucherzahl) {
+        this.erwarteteBesucherzahl = erwarteteBesucherzahl;
+    }
+
+    public String getKunden() {
+        return kunden;
+    }
+
+    public void setKunden(String kunden) {
+        this.kunden = kunden;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

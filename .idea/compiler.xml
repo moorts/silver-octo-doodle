@@ -9,5 +9,6 @@
         <module name="silver-octo-doodle" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="14" />
   </component>
 </project>
