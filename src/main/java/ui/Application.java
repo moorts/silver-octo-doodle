@@ -1,10 +1,12 @@
 package ui;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import model.EventEntityManager;
 import ui.base.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Application {
 
@@ -12,6 +14,9 @@ public class Application {
 
     private View currentView;
     private JPanel currentViewPanel;
+
+    // Entity Managers
+    private EventEntityManager eventEntityManager;
 
     public static void main(String[] args) {
         try {
@@ -27,8 +32,21 @@ public class Application {
         frame.setSize(1280, 720);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setTitle("Event Planner");
+
+        initializeEntityManagers();
 
         setView(new MainMenuView());
+    }
+
+    private void initializeEntityManagers() {
+        eventEntityManager = new EventEntityManager();
+        try {
+            eventEntityManager.loadFromJson("events.json");
+            System.out.println("Successfully loaded " + eventEntityManager.getAll().size() + " events!");
+        } catch (IOException e) {
+            System.out.println("Unable to load events.json");
+        }
     }
 
     public void setView(View view) {
@@ -39,9 +57,14 @@ public class Application {
         currentView = view;
         currentViewPanel = currentView.buildUI();
         currentView.setApplication(this);
+        currentView.initController();
         frame.add(currentViewPanel);
         frame.invalidate();
         frame.validate();
         frame.repaint();
+    }
+
+    public EventEntityManager getEventEntityManager() {
+        return eventEntityManager;
     }
 }

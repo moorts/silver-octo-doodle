@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 public class MainMenuView extends View<MainMenuController> {
     public MainMenuView() {
-        this.controller = new MainMenuController();
+        this.controller = new MainMenuController(this);
     }
+
+    public JTable eventTable;
 
     @Override
     public JPanel buildUI() {
@@ -31,12 +33,7 @@ public class MainMenuView extends View<MainMenuController> {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        var list = new ArrayList<Event>();
-        var event = new Event();
-        event.setTitel("Hochzeit von Manfred und Julia");
-        event.setKategorie("Hochzeit");
-        list.add(event);
-        JTable eventTable = new JTable(new EventTableModel(list));
+        eventTable = new JTable();
         panel.add(new JScrollPane(eventTable));
 
         return panel;

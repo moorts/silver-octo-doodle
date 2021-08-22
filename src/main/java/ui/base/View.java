@@ -14,4 +14,8 @@ public abstract class View<T extends Controller> {
         application = app;
         if (controller != null) controller.setApplication(app);
     }
+
+    public final void initController() {
+        controller.init();
+    }
 }

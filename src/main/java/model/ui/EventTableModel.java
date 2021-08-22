@@ -4,6 +4,7 @@ import model.Event;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,10 @@ public class EventTableModel implements TableModel {
 
     public EventTableModel(List<Event> events) {
         this.events = events;
+    }
+
+    public EventTableModel(Collection<Event> events) {
+        this.events = new ArrayList<>(events);
     }
 
     @Override

@@ -1,5 +1,11 @@
 package model;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class EventEntityManager implements EntityManager<Event> {
@@ -30,5 +36,27 @@ public class EventEntityManager implements EntityManager<Event> {
     @Override
     public void remove(Event instance) {
 
+    }
+
+    @Override
+    public Collection<Event> getAll() {
+        return allElements.values();
+    }
+
+    @Override
+    public void loadFromJson(String path) throws IOException {
+        Gson gson = new Gson();
+        String fileContent = Files.readString(Paths.get(path));
+        Event[] events = gson.fromJson(fileContent, Event[].class);
+        for (Event event : events) {
+            this.allElements.put(event.getId(), event);
+        }
+    }
+
+    @Override
+    public void saveToJson(String path) throws IOException {
+        Gson gson = new Gson();
+        String json = gson.toJson(allElements.values().toArray(new Event[0]), Event[].class);
+        Files.writeString(Paths.get(path), json);
     }
 }

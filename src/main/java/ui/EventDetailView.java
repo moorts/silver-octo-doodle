@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class EventDetailView extends View<EventDetailController> {
     public EventDetailView() {
-        this.controller = new EventDetailController();
+        this.controller = new EventDetailController(this);
     }
 
     @Override
