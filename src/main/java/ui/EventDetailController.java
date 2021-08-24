@@ -7,10 +7,14 @@ import model.Event;
 import ui.base.Controller;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.text.DateFormat;
 import java.util.List;
 
 public class EventDetailController extends Controller<EventDetailView> {
+
+    public static final String LABEL_HEADER = "<html><u>%s</u></html>";
+    public static final String LABEL_START_DATE = "<html><u>Start:</u> %s</html>";
+    public static final String LABEL_END_DATE = "<html><u>Ende:</u> %s</html>";
 
     private Event event;
 
@@ -22,6 +26,9 @@ public class EventDetailController extends Controller<EventDetailView> {
     @Override
     public void init() {
         loadImages();
+        view.headerLabel.setText(String.format(LABEL_HEADER, event.getTitel()));
+        view.startDateLabel.setText(String.format(LABEL_START_DATE, DateFormat.getInstance().format(event.getStart())));
+        view.endDateLabel.setText(String.format(LABEL_END_DATE, DateFormat.getInstance().format(event.getEnde())));
     }
 
     private void loadImages() {

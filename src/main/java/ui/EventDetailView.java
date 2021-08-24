@@ -6,6 +6,8 @@ import ui.base.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.util.HashMap;
 
 public class EventDetailView extends View<EventDetailController> {
     public EventDetailView(Event event) {
@@ -13,6 +15,9 @@ public class EventDetailView extends View<EventDetailController> {
     }
 
     public SlideshowComponent slideshow;
+    public JLabel headerLabel;
+    public JLabel startDateLabel;
+    public JLabel endDateLabel;
 
     @Override
     public JPanel buildUI() {
@@ -34,6 +39,16 @@ public class EventDetailView extends View<EventDetailController> {
 
         slideshow = SlideshowComponent.builder("eventDetailSlideshow").build();
         panel.add(slideshow);
+
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+        JScrollPane textScrollPane = new JScrollPane(labelPanel);
+        panel.add(textScrollPane);
+
+        labelPanel.add(headerLabel = new JLabel(""));
+        headerLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        labelPanel.add(startDateLabel = new JLabel(""));
+        labelPanel.add(endDateLabel = new JLabel(""));
 
         return panel;
     }
