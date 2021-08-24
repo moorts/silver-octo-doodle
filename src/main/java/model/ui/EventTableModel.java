@@ -73,4 +73,8 @@ public class EventTableModel implements TableModel {
     public void removeTableModelListener(TableModelListener l) {
 
     }
+
+    public Event getRowAt(int rowIndex) {
+        return events.get(rowIndex);
+    }
 }

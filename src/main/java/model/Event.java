@@ -14,6 +14,7 @@ public class Event {
     private String kunden;
     private double budget;
     private Status status;
+    private List<String> bilder;
 
     private List<Kontaktinformationen> kontakte;
 
@@ -101,5 +102,9 @@ public class Event {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<String> getBilder() {
+        return bilder;
     }
 }
