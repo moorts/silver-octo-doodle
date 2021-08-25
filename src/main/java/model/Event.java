@@ -107,4 +107,8 @@ public class Event {
     public List<String> getBilder() {
         return bilder;
     }
+
+    public List<Kontaktinformationen> getKontakte() {
+        return kontakte;
+    }
 }

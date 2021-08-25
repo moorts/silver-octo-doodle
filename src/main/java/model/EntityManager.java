@@ -15,7 +15,7 @@ public interface EntityManager<T> {
 
     public Collection<T> getAll();
 
-    public void loadFromJson(String path) throws IOException;
+    public void loadFromJson() throws IOException;
 
-    public void saveToJson(String path) throws IOException;
+    public void saveToJson() throws IOException;
 }

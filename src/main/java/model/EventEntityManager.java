@@ -44,9 +44,9 @@ public class EventEntityManager implements EntityManager<Event> {
     }
 
     @Override
-    public void loadFromJson(String path) throws IOException {
+    public void loadFromJson() throws IOException {
         Gson gson = new Gson();
-        String fileContent = Files.readString(Paths.get(path));
+        String fileContent = Files.readString(Paths.get("events.json"));
         Event[] events = gson.fromJson(fileContent, Event[].class);
         for (Event event : events) {
             this.allElements.put(event.getId(), event);
@@ -54,9 +54,9 @@ public class EventEntityManager implements EntityManager<Event> {
     }
 
     @Override
-    public void saveToJson(String path) throws IOException {
+    public void saveToJson() throws IOException {
         Gson gson = new Gson();
         String json = gson.toJson(allElements.values().toArray(new Event[0]), Event[].class);
-        Files.writeString(Paths.get(path), json);
+        Files.writeString(Paths.get("events.json"), json);
     }
 }

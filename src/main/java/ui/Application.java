@@ -1,5 +1,8 @@
 package ui;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import model.EventEntityManager;
 import ui.base.View;
@@ -42,7 +45,7 @@ public class Application {
     private void initializeEntityManagers() {
         eventEntityManager = new EventEntityManager();
         try {
-            eventEntityManager.loadFromJson("events.json");
+            eventEntityManager.loadFromJson();
             System.out.println("Successfully loaded " + eventEntityManager.getAll().size() + " events!");
         } catch (IOException e) {
             System.out.println("Unable to load events.json");
