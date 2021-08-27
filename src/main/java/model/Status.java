@@ -27,4 +27,9 @@ public enum Status {
     public String getHtmlString() {
         return String.format("<font color='%s'>%s</font>", color, displayname);
     }
+
+    @Override
+    public String toString() {
+        return displayname;
+    }
 }

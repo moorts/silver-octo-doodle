@@ -2,10 +2,12 @@ package ui;
 
 import de.dhbwka.swe.utils.gui.SlideshowComponent;
 import model.Event;
+import model.Status;
 import ui.base.View;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListDataListener;
 import java.awt.*;
 import java.lang.reflect.Field;
 
@@ -27,6 +29,12 @@ public class EventDetailView extends View<EventDetailController> {
     public JTextField kategorieTextField;
     public JTextArea beschreibungTextArea;
     public JButton saveEventDetailsButton;
+    public JComboBox<Status> statusComboBox;
+    public JTable kontakteTable;
+    public JButton neuerKontaktButton;
+    public JButton kontaktLoeschenButton;
+    public JTextField startTextField;
+    public JTextField endeTextField;
 
     @Override
     public JPanel buildUI() {
@@ -132,9 +140,9 @@ public class EventDetailView extends View<EventDetailController> {
     private JPanel buildDetailsTab() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JPanel buttonBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonBar.add(saveEventDetailsButton = new JButton("Speichern"));
-        panel.add(buttonBar, BorderLayout.SOUTH);
+        //JPanel buttonBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //buttonBar.add(saveEventDetailsButton = new JButton("Änderungen speichern"));
+        //panel.add(buttonBar, BorderLayout.SOUTH);
 
         JPanel fieldsPanel = new JPanel();
         fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.Y_AXIS));
@@ -164,10 +172,48 @@ public class EventDetailView extends View<EventDetailController> {
         scrollPane.setAlignmentX(0f);
         fieldsPanel.add(scrollPane);
 
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        fieldsPanel.add(new JLabel("Status:"));
+        fieldsPanel.add(statusComboBox = new JComboBox<Status>(Status.values()));
+        statusComboBox.setAlignmentX(0f);
+        statusComboBox.setMaximumSize(new Dimension(Integer.MAX_VALUE, statusComboBox.getPreferredSize().height));
+
+        fieldsPanel.add(Box.createVerticalStrut(10));
+        fieldsPanel.add(new JLabel("Kontaktinformationen:"));
+        JScrollPane tableScrollPane;
+        fieldsPanel.add(tableScrollPane = new JScrollPane(kontakteTable = new JTable()));
+        tableScrollPane.setAlignmentX(0f);
+        tableScrollPane.setPreferredSize(new Dimension(tableScrollPane.getPreferredSize().width, 50));
+        fieldsPanel.add(Box.createVerticalStrut(5));
+        JPanel kontaktButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        kontaktButtonsPanel.add(neuerKontaktButton = new JButton("Neuen Kontakt hinzufügen"));
+        kontaktButtonsPanel.add(kontaktLoeschenButton = new JButton("Ausgewählten Kontakt löschen"));
+        kontaktButtonsPanel.setAlignmentX(0f);
+        kontaktButtonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, kontaktButtonsPanel.getPreferredSize().height));
+        fieldsPanel.add(kontaktButtonsPanel);
+
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        fieldsPanel.add(new JLabel("Startzeitpunkt (YYYY-MM-DD HH:mm):"));
+        startTextField = new JTextField();
+        startTextField.setAlignmentX(0f);
+        startTextField.setMaximumSize(new Dimension(Integer.MAX_VALUE, startTextField.getPreferredSize().height));
+        fieldsPanel.add(startTextField);
+
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        fieldsPanel.add(new JLabel("Endzeitpunkt (YYYY-MM-DD HH:mm):"));
+        endeTextField = new JTextField();
+        endeTextField.setAlignmentX(0f);
+        endeTextField.setMaximumSize(new Dimension(Integer.MAX_VALUE, endeTextField.getPreferredSize().height));
+        fieldsPanel.add(endeTextField);
 
         fieldsPanel.add(Box.createGlue());
 
-        panel.add(fieldsPanel);
+        fieldsPanel.add(saveEventDetailsButton = new JButton("Änderungen speichern"));
+
+        panel.add(new JScrollPane(fieldsPanel));
 
         return panel;
     }
@@ -180,6 +226,7 @@ public class EventDetailView extends View<EventDetailController> {
     private JPanel buildButtonBar() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel.setBorder(new JScrollPane().getBorder());
 
         panel.add(backButton = new JButton("Zurück"));
 

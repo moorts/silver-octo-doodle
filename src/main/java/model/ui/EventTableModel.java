@@ -1,6 +1,7 @@
 package model.ui;
 
 import model.Event;
+import model.Status;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -11,8 +12,8 @@ import java.util.List;
 
 public class EventTableModel implements TableModel {
 
-    private static final String[] columns = new String[] { "Name", "Kategorie" };
-    private static final Class<?>[] columnTypes = new Class<?>[] { String.class, String.class };
+    private static final String[] columns = new String[] { "Name", "Kategorie", "Status" };
+    private static final Class<?>[] columnTypes = new Class<?>[] { String.class, String.class, Status.class };
 
     public List<Event> events;
 
@@ -54,6 +55,7 @@ public class EventTableModel implements TableModel {
         switch (columnIndex) {
             case 0: return events.get(rowIndex).getTitel();
             case 1: return events.get(rowIndex).getKategorie();
+            case 2: return events.get(rowIndex).getStatus();
             default:
                 return null;
         }

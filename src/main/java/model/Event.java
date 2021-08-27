@@ -15,9 +15,7 @@ public class Event {
     private double budget;
     private Status status;
     private List<String> bilder;
-
     private List<Kontaktinformationen> kontakte;
-
     private List<TeilEvent> teilEvents;
 
     public double summiereKosten() {
@@ -110,5 +108,9 @@ public class Event {
 
     public List<Kontaktinformationen> getKontakte() {
         return kontakte;
+    }
+
+    public void setKontakte(List<Kontaktinformationen> kontakte) {
+        this.kontakte = kontakte;
     }
 }

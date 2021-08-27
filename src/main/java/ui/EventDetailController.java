@@ -4,11 +4,17 @@ import de.dhbwka.swe.utils.app.SlideShowComponentApp;
 import de.dhbwka.swe.utils.model.ImageElement;
 import de.dhbwka.swe.utils.util.ImageLoader;
 import model.Event;
+import model.Status;
+import model.ui.KontaktinformationenTableModel;
 import ui.base.Controller;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +24,7 @@ public class EventDetailController extends Controller<EventDetailView> {
     public static final String LABEL_START_DATE = "<html><u>Start:</u> %s</html>";
     public static final String LABEL_END_DATE = "<html><u>Ende:</u> %s</html>";
     public static final String LABEL_STATUS = "<html><u>Status:</u> %s</html>";
+    private static final SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     private Event event;
 
@@ -30,12 +37,27 @@ public class EventDetailController extends Controller<EventDetailView> {
     public void init() {
         updateBasicEventData();
         updateEventDetails();
+
         view.backButton.addActionListener(e -> {
             application.setView(new MainMenuView());
         });
+
         view.saveEventDetailsButton.addActionListener(e -> {
             if (isEventDetailsValid())
                 saveEventDetails();
+        });
+
+        view.neuerKontaktButton.addActionListener(e -> {
+            ((KontaktinformationenTableModel)view.kontakteTable.getModel()).addNewRow();
+            view.kontakteTable.updateUI();
+        });
+
+        view.kontaktLoeschenButton.addActionListener(e -> {
+            var selectedRow = view.kontakteTable.getSelectedRow();
+            if (selectedRow != -1) {
+                ((KontaktinformationenTableModel)view.kontakteTable.getModel()).removeRow(selectedRow);
+                view.kontakteTable.updateUI();
+            }
         });
     }
 
@@ -57,18 +79,55 @@ public class EventDetailController extends Controller<EventDetailView> {
         view.titelTextField.setText(event.getTitel());
         view.kategorieTextField.setText(event.getKategorie());
         view.beschreibungTextArea.setText(event.getBeschreibung());
+        view.statusComboBox.setSelectedItem(event.getStatus());
+        view.kontakteTable.setModel(new KontaktinformationenTableModel(event.getKontakte()));
+        view.startTextField.setText(INPUT_DATE_FORMAT.format(event.getStart()));
+        view.endeTextField.setText(INPUT_DATE_FORMAT.format(event.getEnde()));
     }
 
     private boolean isEventDetailsValid() {
-        return true;
+
+        boolean valid = true;
+        var errorMessageBuilder = new StringBuilder();
+
+        if (view.titelTextField.getText().isBlank()) {
+            valid = false;
+            errorMessageBuilder.append("Der Titel darf nicht leer sein.\n");
+        }
+
+        try{
+            INPUT_DATE_FORMAT.parse(view.startTextField.getText());
+        } catch (ParseException e) {
+            valid = false;
+            errorMessageBuilder.append("Startzeitpunkt hat kein valides Format.\n");
+        }
+
+        try{
+            INPUT_DATE_FORMAT.parse(view.endeTextField.getText());
+        } catch (ParseException e) {
+            valid = false;
+            errorMessageBuilder.append("Endzeitpunkt hat kein valides Format.\n");
+        }
+
+        if (!valid) {
+            JOptionPane.showMessageDialog(null, errorMessageBuilder, "Fehler beim Speichern!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return valid;
     }
 
     private void saveEventDetails() {
         event.setTitel(view.titelTextField.getText());
         event.setKategorie(view.kategorieTextField.getText());
         event.setBeschreibung(view.beschreibungTextArea.getText());
+        event.setStatus((Status)view.statusComboBox.getSelectedItem());
+        event.setKontakte(new ArrayList<>(((KontaktinformationenTableModel)view.kontakteTable.getModel()).getAllRows()));
         try {
+            event.setStart(INPUT_DATE_FORMAT.parse(view.startTextField.getText()));
+            event.setEnde(INPUT_DATE_FORMAT.parse(view.endeTextField.getText()));
             application.getEventEntityManager().saveToJson();
+        } catch (ParseException e) {
+            System.out.println("Unable to parse start or end date.");
         } catch (IOException e) {
             System.out.println("Unable to save events.");
         }
