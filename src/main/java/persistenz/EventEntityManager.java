@@ -1,6 +1,8 @@
-package model;
+package persistenz;
 
 import com.google.gson.Gson;
+import model.EntityManager;
+import model.Event;
 
 import java.io.IOException;
 import java.nio.file.Files;

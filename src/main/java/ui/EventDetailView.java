@@ -35,6 +35,8 @@ public class EventDetailView extends View<EventDetailController> {
     public JButton kontaktLoeschenButton;
     public JTextField startTextField;
     public JTextField endeTextField;
+    public JButton bildHinzufuegenButton;
+    public JButton bildLoeschenButton;
 
     @Override
     public JPanel buildUI() {
@@ -208,6 +210,17 @@ public class EventDetailView extends View<EventDetailController> {
         endeTextField.setAlignmentX(0f);
         endeTextField.setMaximumSize(new Dimension(Integer.MAX_VALUE, endeTextField.getPreferredSize().height));
         fieldsPanel.add(endeTextField);
+
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        var imageButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        imageButtonPanel.add(bildHinzufuegenButton = new JButton("Bild hinzufügen..."));
+        imageButtonPanel.add(bildLoeschenButton = new JButton("Ausgewähltes Bild löschen"));
+
+        imageButtonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, imageButtonPanel.getPreferredSize().height));
+        imageButtonPanel.setAlignmentX(0f);
+        fieldsPanel.add(imageButtonPanel);
 
         fieldsPanel.add(Box.createGlue());
 

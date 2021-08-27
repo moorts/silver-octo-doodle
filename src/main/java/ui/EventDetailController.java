@@ -1,6 +1,7 @@
 package ui;
 
 import de.dhbwka.swe.utils.app.SlideShowComponentApp;
+import de.dhbwka.swe.utils.gui.SlideshowComponent;
 import de.dhbwka.swe.utils.model.ImageElement;
 import de.dhbwka.swe.utils.util.ImageLoader;
 import model.Event;
@@ -10,6 +11,7 @@ import ui.base.Controller;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,6 +28,8 @@ public class EventDetailController extends Controller<EventDetailView> {
     public static final String LABEL_STATUS = "<html><u>Status:</u> %s</html>";
     private static final SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+    private List<String> slideshowImagePaths = new ArrayList<>();
+
     private Event event;
 
     public EventDetailController(EventDetailView view, Event event) {
@@ -35,6 +39,7 @@ public class EventDetailController extends Controller<EventDetailView> {
 
     @Override
     public void init() {
+        slideshowImagePaths.addAll(event.getBilder());
         updateBasicEventData();
         updateEventDetails();
 
@@ -57,6 +62,32 @@ public class EventDetailController extends Controller<EventDetailView> {
             if (selectedRow != -1) {
                 ((KontaktinformationenTableModel)view.kontakteTable.getModel()).removeRow(selectedRow);
                 view.kontakteTable.updateUI();
+            }
+        });
+
+        view.bildHinzufuegenButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Bilddatei (*.jpg, *.jpeg, *.png)", "jpg", "jpeg", "png"));
+            var result = fileChooser.showOpenDialog(view.bildHinzufuegenButton);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                try {
+                    slideshowImagePaths.add(fileChooser.getSelectedFile().getCanonicalPath());
+                    loadImages();
+                } catch (IOException ioException) {
+                    System.out.println("Unable to get file path");
+                }
+            }
+        });
+
+        view.bildLoeschenButton.addActionListener(e -> {
+            try {
+                var imagePosField = SlideshowComponent.class.getDeclaredField("imagePosition");
+                imagePosField.setAccessible(true);
+                int position = (int)imagePosField.get(view.slideshow);
+                slideshowImagePaths.remove(position);
+                loadImages();
+            } catch (NoSuchFieldException | IllegalAccessException noSuchFieldException) {
+                // ignore
             }
         });
     }
@@ -122,6 +153,7 @@ public class EventDetailController extends Controller<EventDetailView> {
         event.setBeschreibung(view.beschreibungTextArea.getText());
         event.setStatus((Status)view.statusComboBox.getSelectedItem());
         event.setKontakte(new ArrayList<>(((KontaktinformationenTableModel)view.kontakteTable.getModel()).getAllRows()));
+        event.setBilder(slideshowImagePaths);
         try {
             event.setStart(INPUT_DATE_FORMAT.parse(view.startTextField.getText()));
             event.setEnde(INPUT_DATE_FORMAT.parse(view.endeTextField.getText()));
@@ -135,17 +167,16 @@ public class EventDetailController extends Controller<EventDetailView> {
     }
 
     private void loadImages() {
-        List<String> paths = event.getBilder();
         try {
             // Load default image from jar resources if no images are defined
-            if (paths == null || paths.size() == 0) {
+            if (slideshowImagePaths == null || slideshowImagePaths.size() == 0) {
                 System.out.println("No images defined for event with ID " + event.getId());
                 var missingImage = ImageIO.read(SlideShowComponentApp.class.getResourceAsStream("/images/missingimage.png"));
                 view.slideshow.setImageElements(new ImageElement[]{new ImageElement(missingImage, "/images/missingimage.png")});
                 return;
             }
 
-            var pathArray = paths.toArray(new String[0]);
+            var pathArray = slideshowImagePaths.toArray(new String[0]);
             for (var path : pathArray) {
                 System.out.println("Loading image from path: " + path);
             }

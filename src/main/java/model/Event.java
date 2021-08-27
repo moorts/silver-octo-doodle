@@ -14,6 +14,7 @@ public class Event {
     private String kunden;
     private double budget;
     private Status status;
+
     private List<String> bilder;
     private List<Kontaktinformationen> kontakte;
     private List<TeilEvent> teilEvents;
@@ -104,6 +105,10 @@ public class Event {
 
     public List<String> getBilder() {
         return bilder;
+    }
+
+    public void setBilder(List<String> bilder) {
+        this.bilder = bilder;
     }
 
     public List<Kontaktinformationen> getKontakte() {

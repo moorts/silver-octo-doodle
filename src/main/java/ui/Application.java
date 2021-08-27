@@ -1,14 +1,10 @@
 package ui;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import model.EventEntityManager;
+import persistenz.EventEntityManager;
 import ui.base.View;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
 public class Application {
