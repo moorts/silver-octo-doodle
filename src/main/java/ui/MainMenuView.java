@@ -5,6 +5,7 @@ import model.ui.EventTableModel;
 import ui.base.View;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class MainMenuView extends View<MainMenuController> {
     }
 
     public JTable eventTable;
+    public JTable hilfsmittelTable;
 
     @Override
     public JPanel buildUI() {
@@ -40,6 +42,12 @@ public class MainMenuView extends View<MainMenuController> {
     }
 
     private JPanel getHilfsmittelListe() {
-        return new JPanel();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        hilfsmittelTable = new JTable();
+        panel.add(new JScrollPane(hilfsmittelTable));
+
+        return panel;
     }
 }
