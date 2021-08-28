@@ -25,7 +25,11 @@ public class HilfsmittelDetailView extends View {
     public JTextArea beschreibungTextArea;
     public JTextArea beschreibungReadOnlyTextArea;
 
-    public JLabel statusLabel;
+    public JSpinner anzahlInsgesamtSpinner;
+
+    public JButton saveHilfsmittelDetailsButton;
+    public JButton bildHinzufuegenButton;
+    public JButton bildLoeschenButton;
 
     @Override
     public JPanel buildUI() {
@@ -39,7 +43,7 @@ public class HilfsmittelDetailView extends View {
         JPanel rightPanel = buildRightPanel();
 
         leftrightPanel.add(leftPanel);
-        //leftrightPanel.add(rightPanel);
+        leftrightPanel.add(rightPanel);
         panel.add(leftrightPanel, BorderLayout.CENTER);
 
         JPanel buttonBar = buildButtonBar();
@@ -94,15 +98,64 @@ public class HilfsmittelDetailView extends View {
         beschreibungScrollPane.setAlignmentX(0f);
         labelPanel.add(beschreibungScrollPane);
 
-        labelPanel.add(Box.createVerticalStrut(5));
-
-        labelPanel.add(statusLabel = new JLabel(String.format(EventDetailController.LABEL_STATUS, "")));
-
         return panel;
     }
 
-    public JPanel buildRightPanel() {
-        return null;
+    private JPanel buildRightPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        //JPanel buttonBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //buttonBar.add(saveEventDetailsButton = new JButton("Änderungen speichern"));
+        //panel.add(buttonBar, BorderLayout.SOUTH);
+
+        JPanel fieldsPanel = new JPanel();
+        fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.Y_AXIS));
+        fieldsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        fieldsPanel.add(new JLabel("Titel:"));
+        nameTextField = new JTextField();
+        nameTextField.setAlignmentX(0f);
+        nameTextField.setMaximumSize(new Dimension(Integer.MAX_VALUE, nameTextField.getPreferredSize().height));
+        fieldsPanel.add(nameTextField);
+
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        fieldsPanel.add(new JLabel("Gesamtanzahl"));
+        anzahlInsgesamtSpinner = new JSpinner();
+        anzahlInsgesamtSpinner.setAlignmentX(0f);
+        anzahlInsgesamtSpinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, anzahlInsgesamtSpinner.getPreferredSize().height));
+        fieldsPanel.add(anzahlInsgesamtSpinner);
+
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        fieldsPanel.add(new JLabel("Beschreibung:"));
+        beschreibungTextArea = new JTextArea();
+        beschreibungTextArea.setAlignmentX(0f);
+        beschreibungTextArea.setLineWrap(true);
+        var scrollPane = new JScrollPane(beschreibungTextArea);
+        scrollPane.setAlignmentX(0f);
+        fieldsPanel.add(scrollPane);
+
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        var imageButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        imageButtonPanel.add(bildHinzufuegenButton = new JButton("Bild hinzufügen..."));
+        imageButtonPanel.add(bildLoeschenButton = new JButton("Ausgewähltes Bild löschen"));
+
+        imageButtonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, imageButtonPanel.getPreferredSize().height));
+        imageButtonPanel.setAlignmentX(0f);
+        fieldsPanel.add(imageButtonPanel);
+
+        fieldsPanel.add(Box.createGlue());
+
+        fieldsPanel.add(saveHilfsmittelDetailsButton = new JButton("Änderungen speichern"));
+
+        fieldsPanel.add(Box.createVerticalStrut(350));
+
+        panel.add(fieldsPanel);
+
+        return panel;
     }
 
     private JPanel buildButtonBar() {

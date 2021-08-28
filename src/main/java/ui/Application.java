@@ -1,6 +1,7 @@
 package ui;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
+import model.HilfsmittelEntityManager;
 import persistenz.EventEntityManager;
 import ui.base.View;
 
@@ -16,6 +17,7 @@ public class Application {
 
     // Entity Managers
     private EventEntityManager eventEntityManager;
+    private HilfsmittelEntityManager hilfsmittelEntityManager;
 
     public static void main(String[] args) {
         try {
@@ -46,6 +48,13 @@ public class Application {
         } catch (IOException e) {
             System.out.println("Unable to load events.json");
         }
+        hilfsmittelEntityManager = new HilfsmittelEntityManager();
+        try {
+            hilfsmittelEntityManager.loadFromJson();
+            System.out.println("Successfully loaded " + hilfsmittelEntityManager.getAll().size() + " events!");
+        } catch (IOException e) {
+            System.out.println("Unable to load hilfsmittel.json");
+        }
     }
 
     public void setView(View view) {
@@ -65,5 +74,9 @@ public class Application {
 
     public EventEntityManager getEventEntityManager() {
         return eventEntityManager;
+    }
+
+    public HilfsmittelEntityManager getHilfsmittelEntityManager() {
+        return hilfsmittelEntityManager;
     }
 }
