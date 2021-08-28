@@ -20,7 +20,12 @@ public class KontaktinformationenTableModel implements TableModel {
 
     private List<TableModelListener> listeners = new ArrayList<>();
 
-    public KontaktinformationenTableModel(Collection<Kontaktinformationen> kontakte) { this.kontakte = new ArrayList<>(kontakte); }
+    public KontaktinformationenTableModel(Collection<Kontaktinformationen> kontakte) {
+        if (kontakte != null)
+            this.kontakte = new ArrayList<>(kontakte);
+        else
+            this.kontakte = new ArrayList<>();
+    }
 
     @Override
     public int getRowCount() {

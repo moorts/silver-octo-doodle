@@ -3,6 +3,7 @@ package ui;
 import de.dhbwka.swe.utils.gui.SlideshowComponent;
 import model.Event;
 import model.Status;
+import model.TeilEvent;
 import ui.base.View;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListDataListener;
 import java.awt.*;
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class EventDetailView extends View<EventDetailController> {
     public EventDetailView(Event event) {
@@ -37,6 +39,8 @@ public class EventDetailView extends View<EventDetailController> {
     public JTextField endeTextField;
     public JButton bildHinzufuegenButton;
     public JButton bildLoeschenButton;
+
+    private JPanel elementPreviewPanel;
 
     @Override
     public JPanel buildUI() {
@@ -232,7 +236,14 @@ public class EventDetailView extends View<EventDetailController> {
     }
 
     private JPanel buildElementeTab() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout());
+
+        elementPreviewPanel = new JPanel();
+        elementPreviewPanel.setLayout(new BoxLayout(elementPreviewPanel, BoxLayout.Y_AXIS));
+
+        JScrollPane scrollPane;
+        panel.add(scrollPane = new JScrollPane(elementPreviewPanel));
+
         return panel;
     }
 
@@ -244,5 +255,11 @@ public class EventDetailView extends View<EventDetailController> {
         panel.add(backButton = new JButton("Zurück"));
 
         return panel;
+    }
+
+    public void addEventElementDetailPanels(List<TeilEvent> teilEvents) {
+        for (TeilEvent teilEvent : teilEvents) {
+            elementPreviewPanel.add(teilEvent.getPreviewPanel());
+        }
     }
 }

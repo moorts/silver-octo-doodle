@@ -39,9 +39,11 @@ public class EventDetailController extends Controller<EventDetailView> {
 
     @Override
     public void init() {
-        slideshowImagePaths.addAll(event.getBilder());
+        if (event.getBilder() != null)
+            slideshowImagePaths.addAll(event.getBilder());
         updateBasicEventData();
         updateEventDetails();
+        updateEventElements();
 
         view.backButton.addActionListener(e -> {
             application.setView(new MainMenuView());
@@ -114,6 +116,11 @@ public class EventDetailController extends Controller<EventDetailView> {
         view.kontakteTable.setModel(new KontaktinformationenTableModel(event.getKontakte()));
         view.startTextField.setText(INPUT_DATE_FORMAT.format(event.getStart()));
         view.endeTextField.setText(INPUT_DATE_FORMAT.format(event.getEnde()));
+    }
+
+    private void updateEventElements() {
+        if (event.getTeilEvents() != null)
+            view.addEventElementDetailPanels(event.getTeilEvents());
     }
 
     private boolean isEventDetailsValid() {

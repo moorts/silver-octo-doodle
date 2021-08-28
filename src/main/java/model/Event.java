@@ -118,4 +118,8 @@ public class Event {
     public void setKontakte(List<Kontaktinformationen> kontakte) {
         this.kontakte = kontakte;
     }
+
+    public List<TeilEvent> getTeilEvents() {
+        return teilEvents;
+    }
 }
