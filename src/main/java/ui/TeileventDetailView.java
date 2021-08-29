@@ -2,6 +2,7 @@ package ui;
 
 import de.dhbwka.swe.utils.gui.SlideshowComponent;
 import model.Event;
+import model.EventElement;
 import model.Status;
 import model.TeilEvent;
 import ui.base.View;
@@ -26,6 +27,7 @@ public class TeileventDetailView extends View<TeileventDetailController> {
 
     private Event event;
     private TeilEvent teilevent;
+    private JPanel elementPanel;
 
     public TeileventDetailView(Event event, TeilEvent teilevent) {
         this.event = event;
@@ -132,9 +134,13 @@ public class TeileventDetailView extends View<TeileventDetailController> {
     }
 
     private JPanel buildRightPanel() {
-        JPanel panel = new JPanel();
+        elementPanel = new JPanel(new BorderLayout());
 
-        return panel;
+        return elementPanel;
+    }
+
+    public void setEventElement(EventElement element) {
+        elementPanel.add(element.buildUI());
     }
 
 }

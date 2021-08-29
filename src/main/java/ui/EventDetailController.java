@@ -4,9 +4,11 @@ import de.dhbwka.swe.utils.app.SlideShowComponentApp;
 import de.dhbwka.swe.utils.gui.SlideshowComponent;
 import de.dhbwka.swe.utils.model.ImageElement;
 import de.dhbwka.swe.utils.util.ImageLoader;
+import model.ElementType;
 import model.Event;
 import model.Status;
 import model.TeilEvent;
+import model.factory.EventElementFactory;
 import model.ui.KontaktinformationenTableModel;
 import ui.base.Controller;
 
@@ -99,11 +101,15 @@ public class EventDetailController extends Controller<EventDetailView> {
             if (event.getTeilEvents() == null) {
                 event.setTeilEvents(new ArrayList<>());
             }
+
+            var type = (ElementType)view.elementHinzufuegenCombobox.getSelectedItem();
+
             TeilEvent newTeilEvent = new TeilEvent();
-            newTeilEvent.setName("Neues Teil Event");
+            newTeilEvent.setName("Neues Event Element");
             newTeilEvent.setStart(new Date());
             newTeilEvent.setEnd(new Date());
             newTeilEvent.setStatus(Status.ERSTELLT);
+            newTeilEvent.setEventElement(new EventElementFactory().createEventElement(type));
             event.getTeilEvents().add(newTeilEvent);
             try {
                 application.getEventEntityManager().saveToJson();

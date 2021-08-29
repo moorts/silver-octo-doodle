@@ -40,6 +40,8 @@ public class TeileventDetailController extends Controller<TeileventDetailView> {
         loadImages();
 
         updateTeilEventData();
+        if (teilEvent.getEventElement() != null)
+            view.setEventElement(teilEvent.getEventElement());
 
         view.zurueckButton.addActionListener(e -> {
             application.setView(new EventDetailView(event));
@@ -138,6 +140,7 @@ public class TeileventDetailController extends Controller<TeileventDetailView> {
     }
 
     private void saveData() {
+        teilEvent.getEventElement().saveChanges();
         teilEvent.setBeschreibung(view.beschreibungTextArea.getText());
         teilEvent.setName(view.nameTextField.getText());
         teilEvent.setStatus((Status)view.statusComboBox.getSelectedItem());

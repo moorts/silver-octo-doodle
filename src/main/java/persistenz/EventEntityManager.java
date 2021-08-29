@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.EntityManager;
 import model.Event;
+import model.EventElement;
+import utilities.InterfaceAdapter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,9 +16,11 @@ import java.util.HashMap;
 public class EventEntityManager implements EntityManager<Event> {
 
     private HashMap<String, Event> allElements;
+    private Gson gson;
 
     public EventEntityManager() {
         this.allElements = new HashMap<>();
+        this.gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(EventElement.class, new InterfaceAdapter<EventElement>()).create();
     }
 
     @Override
@@ -48,7 +52,6 @@ public class EventEntityManager implements EntityManager<Event> {
 
     @Override
     public void loadFromJson() throws IOException {
-        Gson gson = new Gson();
         String fileContent = Files.readString(Paths.get("events.json"));
         Event[] events = gson.fromJson(fileContent, Event[].class);
         for (Event event : events) {
@@ -58,7 +61,6 @@ public class EventEntityManager implements EntityManager<Event> {
 
     @Override
     public void saveToJson() throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(allElements.values().toArray(new Event[0]), Event[].class);
         Files.writeString(Paths.get("events.json"), json);
     }

@@ -128,6 +128,8 @@ public class TeilEvent {
 
         labelPanel.add(Box.createVerticalStrut(10));
 
+        labelPanel.add(new JLabel("<html><u>Typ:</u> " + (eventElement != null ? eventElement.getType().getAnzeigeText() : "") + "</html>"));
+        labelPanel.add(Box.createVerticalStrut(5));
         labelPanel.add(new JLabel("<html><u>Start:</u> " + (start != null ? DateFormat.getInstance().format(start) : "") + "</html>"));
         labelPanel.add(Box.createVerticalStrut(5));
         labelPanel.add(new JLabel("<html><u>Ende:</u> " + (end != null ? DateFormat.getInstance().format(end) : "") + "</html>"));

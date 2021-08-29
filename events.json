@@ -19,7 +19,56 @@
         "telnr": "0123456"
       }
     ],
-    "teilEvents": []
+    "teilEvents": [
+      {
+        "name": "Catering",
+        "start": "Aug 29, 2021, 8:46:00 PM",
+        "end": "Aug 29, 2021, 8:46:00 PM",
+        "status": "ERSTELLT",
+        "eventElement": {
+          "type": "model.Catering",
+          "data": {
+            "speiseangebot": "Lecker Essen",
+            "menuBeschreibung": "Kein lecker Essen"
+          }
+        },
+        "bilder": [],
+        "kosten": 0.0,
+        "beschreibung": ""
+      },
+      {
+        "name": "Band",
+        "start": "Aug 29, 2021, 8:46:00 PM",
+        "end": "Aug 29, 2021, 8:46:00 PM",
+        "status": "ERSTELLT",
+        "eventElement": {
+          "type": "model.Musik",
+          "data": {
+            "kuenstler": "Herbert Grönemeier",
+            "programm": "- Intro\n- Outro"
+          }
+        },
+        "bilder": [],
+        "kosten": 0.0,
+        "beschreibung": ""
+      },
+      {
+        "name": "Location",
+        "start": "Aug 29, 2021, 8:46:00 PM",
+        "end": "Aug 29, 2021, 8:46:00 PM",
+        "status": "ERSTELLT",
+        "eventElement": {
+          "type": "model.Location",
+          "data": {
+            "adresse": "Im Wiesengrund 3\n76187 Karlsruhe",
+            "groesse": 19
+          }
+        },
+        "bilder": [],
+        "kosten": 0.0,
+        "beschreibung": ""
+      }
+    ]
   },
   {
     "id": "abc1234",
@@ -70,15 +119,15 @@
     ],
     "teilEvents": [
       {
-        "name": "Diskothek Rolling Stone",
-        "start": "Aug 16, 2021, 8:00:00 AM",
-        "end": "Aug 17, 2022, 11:00:00 PM",
-        "status": "PAUSIERT",
-        "bilder": [
-          "C:\\Users\\thoma\\Pictures\\Cyberpunk 2077\\photomode_10122020_224718.png"
-        ],
-        "kosten": 0.0,
-        "beschreibung": ""
+        "name": "Neues Event Element",
+        "start": "Aug 29, 2021, 8:51:25 PM",
+        "end": "Aug 29, 2021, 8:51:25 PM",
+        "status": "ERSTELLT",
+        "eventElement": {
+          "type": "model.Catering",
+          "data": {}
+        },
+        "kosten": 0.0
       }
     ]
   }
