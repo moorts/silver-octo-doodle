@@ -122,4 +122,8 @@ public class Event {
     public List<TeilEvent> getTeilEvents() {
         return teilEvents;
     }
+
+    public void setTeilEvents(List<TeilEvent> teilEvents) {
+        this.teilEvents = teilEvents;
+    }
 }

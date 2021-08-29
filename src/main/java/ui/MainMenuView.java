@@ -17,6 +17,7 @@ public class MainMenuView extends View<MainMenuController> {
 
     public JTable eventTable;
     public JTable hilfsmittelTable;
+    public JButton eventErstellenButton;
 
     @Override
     public JPanel buildUI() {
@@ -37,6 +38,10 @@ public class MainMenuView extends View<MainMenuController> {
 
         eventTable = new JTable();
         panel.add(new JScrollPane(eventTable));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(eventErstellenButton = new JButton("Neues Event erstellen"));
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
         return panel;
     }

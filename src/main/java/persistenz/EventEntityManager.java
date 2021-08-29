@@ -1,6 +1,7 @@
 package persistenz;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.EntityManager;
 import model.Event;
 
@@ -57,7 +58,7 @@ public class EventEntityManager implements EntityManager<Event> {
 
     @Override
     public void saveToJson() throws IOException {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(allElements.values().toArray(new Event[0]), Event[].class);
         Files.writeString(Paths.get("events.json"), json);
     }

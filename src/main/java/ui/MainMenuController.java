@@ -2,6 +2,7 @@ package ui;
 
 import model.Event;
 import model.Hilfsmittel;
+import model.factory.EventFactory;
 import model.ui.EventTableModel;
 import model.ui.HilfsmittelTableModel;
 import ui.base.Controller;
@@ -43,6 +44,20 @@ public class MainMenuController extends Controller<MainMenuView> {
                 if (e.getClickCount() == 2 && table.getSelectedRow() == row && row != -1) {
                     Hilfsmittel clickedHilfsmittel = ((HilfsmittelTableModel)table.getModel()).getRowAt(row);
                     application.setView(new HilfsmittelDetailView(clickedHilfsmittel));
+                }
+            }
+        });
+
+        view.eventErstellenButton.addActionListener(e -> {
+            String titel = JOptionPane.showInputDialog("Wie soll das neue Event heißen?");
+            if (!titel.isBlank()) {
+                Event neuesEvent = new EventFactory().createEvent(titel);
+                try {
+                    application.getEventEntityManager().persist(neuesEvent);
+                    application.getEventEntityManager().saveToJson();
+                    application.setView(new EventDetailView(neuesEvent));
+                } catch (Exception exception) {
+
                 }
             }
         });

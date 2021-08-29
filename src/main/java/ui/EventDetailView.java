@@ -1,6 +1,7 @@
 package ui;
 
 import de.dhbwka.swe.utils.gui.SlideshowComponent;
+import model.ElementType;
 import model.Event;
 import model.Status;
 import model.TeilEvent;
@@ -12,6 +13,7 @@ import javax.swing.event.ListDataListener;
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.concurrent.Flow;
 
 public class EventDetailView extends View<EventDetailController> {
     public EventDetailView(Event event) {
@@ -39,6 +41,9 @@ public class EventDetailView extends View<EventDetailController> {
     public JTextField endeTextField;
     public JButton bildHinzufuegenButton;
     public JButton bildLoeschenButton;
+
+    public JButton elementHinzufuegenButton;
+    public JComboBox<ElementType> elementHinzufuegenCombobox;
 
     private JPanel elementPreviewPanel;
 
@@ -244,6 +249,11 @@ public class EventDetailView extends View<EventDetailController> {
         JScrollPane scrollPane;
         panel.add(scrollPane = new JScrollPane(elementPreviewPanel));
 
+        JPanel addElementPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        addElementPanel.add(elementHinzufuegenCombobox = new JComboBox<ElementType>(ElementType.values()));
+        addElementPanel.add(elementHinzufuegenButton = new JButton("Element hinzufügen"));
+        panel.add(addElementPanel, BorderLayout.SOUTH);
+
         return panel;
     }
 
@@ -257,9 +267,13 @@ public class EventDetailView extends View<EventDetailController> {
         return panel;
     }
 
-    public void addEventElementDetailPanels(List<TeilEvent> teilEvents) {
-        for (TeilEvent teilEvent : teilEvents) {
-            elementPreviewPanel.add(teilEvent.getPreviewPanel());
-        }
+    public void addEventElementDetailPanel(TeilEvent teilEvent) {
+        elementPreviewPanel.add(teilEvent.getPreviewPanel());
+        elementPreviewPanel.updateUI();
+    }
+
+    public void removeAllEventElementDetailPanels() {
+        elementPreviewPanel.removeAll();
+        elementPreviewPanel.updateUI();
     }
 }

@@ -21,11 +21,17 @@ public class TeilEvent {
     private Status status;
     private EventElement eventElement;
     private List<String> bilder;
-    private List<Zuweisung> zuweisungen;
+    private double kosten;
+    private String beschreibung;
+
+    private transient List<Zuweisung> zuweisungen;
+
+    public transient JButton loeschenButton;
+    public transient JButton detailsButton;
 
     // UI
 
-    private SlideshowComponent slideshowComponent;
+    private transient SlideshowComponent slideshowComponent;
 
     public String getName() {
         return name;
@@ -55,6 +61,46 @@ public class TeilEvent {
         return zuweisungen;
     }
 
+    public double getKosten() {
+        return kosten;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setEventElement(EventElement eventElement) {
+        this.eventElement = eventElement;
+    }
+
+    public void setBilder(List<String> bilder) {
+        this.bilder = bilder;
+    }
+
+    public void setKosten(double kosten) {
+        this.kosten = kosten;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
     public JPanel getPreviewPanel() {
         JPanel panel = new JPanel(new GridLayout(1, 2));
         panel.setBorder(new JScrollPane().getBorder());
@@ -71,6 +117,7 @@ public class TeilEvent {
         }
         loadImages();
 
+        JPanel rightPanel = new JPanel(new BorderLayout());
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
         labelPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -81,10 +128,22 @@ public class TeilEvent {
 
         labelPanel.add(Box.createVerticalStrut(10));
 
-        labelPanel.add(new JLabel("<html><u>Start:</u> " + (start != null ? DateFormat.getInstance().format(start) : "") + "</html"));
-        labelPanel.add(new JLabel("<html><u>Ende:</u> " + (end != null ? DateFormat.getInstance().format(end) : "") + "</html"));
+        labelPanel.add(new JLabel("<html><u>Start:</u> " + (start != null ? DateFormat.getInstance().format(start) : "") + "</html>"));
+        labelPanel.add(Box.createVerticalStrut(5));
+        labelPanel.add(new JLabel("<html><u>Ende:</u> " + (end != null ? DateFormat.getInstance().format(end) : "") + "</html>"));
+        labelPanel.add(Box.createVerticalStrut(5));
+        labelPanel.add(new JLabel("<html><u>Status:</u> " + (status != null ? status.getHtmlString() : "") + "</html>"));
 
-        panel.add(labelPanel);
+        labelPanel.add(Box.createGlue());
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(detailsButton = new JButton("Details"));
+        buttonPanel.add(loeschenButton = new JButton("Löschen"));
+        buttonPanel.setAlignmentX(0f);
+        rightPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        rightPanel.add(labelPanel);
+        panel.add(rightPanel);
         panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
 
         return panel;

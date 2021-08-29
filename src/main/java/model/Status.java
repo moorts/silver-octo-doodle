@@ -5,8 +5,8 @@ public enum Status {
     GEPLANT("Geplant", "orange"),
     INARBEIT("In Arbeit", "orange"),
     FERTIG("Fertig", "green"),
-    STORNIERT("Storniert", "rot"),
-    PAUSIERT("Pausiert", "rot");
+    STORNIERT("Storniert", "red"),
+    PAUSIERT("Pausiert", "red");
 
     private String displayname;
     private String color;

@@ -1,11 +1,13 @@
 package ui;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import model.HilfsmittelEntityManager;
+import com.formdev.flatlaf.FlatLightLaf;
+import persistenz.HilfsmittelEntityManager;
 import persistenz.EventEntityManager;
 import ui.base.View;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 public class Application {
@@ -21,7 +23,7 @@ public class Application {
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel( new FlatDarculaLaf() );
+            UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }
@@ -30,10 +32,13 @@ public class Application {
 
     private Application() {
         frame = new JFrame();
-        frame.setSize(1280, 720);
+        frame.setSize(1600, 900);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Event Planner");
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 
         initializeEntityManagers();
 

@@ -1,5 +1,27 @@
 [
   {
+    "id": "47ed8aa7-890f-42c8-aaea-dbe9c7cebe38",
+    "titel": "Test Event oder so",
+    "beschreibung": "",
+    "kategorie": "Test",
+    "start": "Aug 29, 2021, 7:37:00 PM",
+    "ende": "Aug 29, 2021, 7:37:00 PM",
+    "erwarteteBesucherzahl": 0,
+    "budget": 0.0,
+    "status": "ERSTELLT",
+    "bilder": [
+      "C:\\Users\\thoma\\Desktop\\star-tours-hollywood-100__v-gseapremiumxl.jpg"
+    ],
+    "kontakte": [
+      {
+        "name": "Nico",
+        "email": "nico@web.de",
+        "telnr": "0123456"
+      }
+    ],
+    "teilEvents": []
+  },
+  {
     "id": "abc1234",
     "titel": "Toller Titel 2",
     "beschreibung": "Nicht so tolle Beschreibung",
@@ -22,9 +44,9 @@
   },
   {
     "id": "f34e2207-ad83-46e8-ad0f-ff564295c65a",
-    "titel": "Hochzeit von Janina und Michael Peniskopf",
+    "titel": "Hochzeit von Janina und Michael Hürtgen",
     "beschreibung": "Michael und Janina möchten im August kirchlich heiraten. Sie werden mit ungefähr 50 Personen feiern und hätten als Location gerne eine Diskothek.",
-    "kategorie": "Hochzeit",
+    "kategorie": "Hochzeits",
     "start": "Aug 15, 2021, 8:00:00 AM",
     "ende": "Aug 21, 2022, 11:00:00 PM",
     "erwarteteBesucherzahl": 50,
@@ -51,17 +73,12 @@
         "name": "Diskothek Rolling Stone",
         "start": "Aug 16, 2021, 8:00:00 AM",
         "end": "Aug 17, 2022, 11:00:00 PM",
-        "status": "GEPLANT",
+        "status": "PAUSIERT",
         "bilder": [
-          "C:\\Users\\thoma\\Pictures\\Cyberpunk 2077\\photomode_10122020_224613.png"
-        ]
-      },
-      {
-        "name": "Hörner Delikatess",
-        "start": "Aug 18, 2021, 8:00:00 AM",
-        "end": "Aug 19, 2022, 11:00:00 PM",
-        "status": "GEPLANT",
-        "bilder": []
+          "C:\\Users\\thoma\\Pictures\\Cyberpunk 2077\\photomode_10122020_224718.png"
+        ],
+        "kosten": 0.0,
+        "beschreibung": ""
       }
     ]
   }

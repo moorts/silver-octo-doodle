@@ -6,6 +6,7 @@ import de.dhbwka.swe.utils.model.ImageElement;
 import de.dhbwka.swe.utils.util.ImageLoader;
 import model.Event;
 import model.Status;
+import model.TeilEvent;
 import model.ui.KontaktinformationenTableModel;
 import ui.base.Controller;
 
@@ -17,6 +18,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,6 +94,24 @@ public class EventDetailController extends Controller<EventDetailView> {
                 // ignore
             }
         });
+
+        view.elementHinzufuegenButton.addActionListener(e -> {
+            if (event.getTeilEvents() == null) {
+                event.setTeilEvents(new ArrayList<>());
+            }
+            TeilEvent newTeilEvent = new TeilEvent();
+            newTeilEvent.setName("Neues Teil Event");
+            newTeilEvent.setStart(new Date());
+            newTeilEvent.setEnd(new Date());
+            newTeilEvent.setStatus(Status.ERSTELLT);
+            event.getTeilEvents().add(newTeilEvent);
+            try {
+                application.getEventEntityManager().saveToJson();
+            } catch (IOException ioException) {
+                System.out.println("Event konnte nicht gespeichert werden");
+            }
+            updateEventElements();
+        });
     }
 
     private void updateBasicEventData() {
@@ -119,8 +139,28 @@ public class EventDetailController extends Controller<EventDetailView> {
     }
 
     private void updateEventElements() {
-        if (event.getTeilEvents() != null)
-            view.addEventElementDetailPanels(event.getTeilEvents());
+        view.removeAllEventElementDetailPanels();
+
+        if (event.getTeilEvents() != null) {
+            for (TeilEvent teilEvent : event.getTeilEvents()) {
+                view.addEventElementDetailPanel(teilEvent);
+                teilEvent.loeschenButton.addActionListener(e -> {
+                    if (JOptionPane.showConfirmDialog(null, "Sind Sie sicher, dass sie das Teilevent löschen möchten?", "Sicher?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                        event.getTeilEvents().remove(teilEvent);
+                        updateEventElements();
+                        try {
+                            application.getEventEntityManager().saveToJson();
+                        } catch (IOException ioException) {
+                            System.out.println("Event konnte nicht gespeichert werden");
+                        }
+                    }
+                });
+                teilEvent.detailsButton.addActionListener(e -> {
+                    application.setView(new TeileventDetailView(event, teilEvent));
+                });
+            }
+        }
+
     }
 
     private boolean isEventDetailsValid() {
@@ -165,6 +205,7 @@ public class EventDetailController extends Controller<EventDetailView> {
             event.setStart(INPUT_DATE_FORMAT.parse(view.startTextField.getText()));
             event.setEnde(INPUT_DATE_FORMAT.parse(view.endeTextField.getText()));
             application.getEventEntityManager().saveToJson();
+            JOptionPane.showMessageDialog(null, "Änderungen erfolgreich gespeichert!", "Gespeichert", JOptionPane.INFORMATION_MESSAGE);
         } catch (ParseException e) {
             System.out.println("Unable to parse start or end date.");
         } catch (IOException e) {
