@@ -3,6 +3,7 @@ package ui;
 import model.Event;
 import model.Hilfsmittel;
 import model.factory.EventFactory;
+import model.factory.HilfsmittelFactory;
 import model.ui.EventTableModel;
 import model.ui.HilfsmittelTableModel;
 import ui.base.Controller;
@@ -56,6 +57,20 @@ public class MainMenuController extends Controller<MainMenuView> {
                     application.getEventEntityManager().persist(neuesEvent);
                     application.getEventEntityManager().saveToJson();
                     application.setView(new EventDetailView(neuesEvent));
+                } catch (Exception exception) {
+
+                }
+            }
+        });
+
+        view.hilfsmittelErstellenButton.addActionListener(e -> {
+            String name = JOptionPane.showInputDialog("Wie soll das neue Hilfsmittel heißen?");
+            if (!name.isBlank()) {
+                Hilfsmittel neuesHilfsmittel = new HilfsmittelFactory().createHilfsmittel(name);
+                try {
+                    application.getHilfsmittelEntityManager().persist(neuesHilfsmittel);
+                    application.getHilfsmittelEntityManager().saveToJson();
+                    application.setView(new HilfsmittelDetailView(neuesHilfsmittel));
                 } catch (Exception exception) {
 
                 }

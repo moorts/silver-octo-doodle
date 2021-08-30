@@ -33,7 +33,8 @@ public class HilfsmittelDetailController extends Controller<HilfsmittelDetailVie
 
     @Override
     public void init() {
-        slideshowImagePaths.addAll(hilfsmittel.getBilder());
+        if (hilfsmittel.getBilder() != null)
+            slideshowImagePaths.addAll(hilfsmittel.getBilder());
         updateHilfsmittelDetails();
         updateBasicHilfsmittelData();
 
@@ -124,17 +125,16 @@ public class HilfsmittelDetailController extends Controller<HilfsmittelDetailVie
     }
 
     private void loadImages() {
-        List<String> paths = hilfsmittel.getBilder();
         try {
             // Load default image from jar resources if no images are defined
-            if (paths == null || paths.size() == 0) {
+            if (slideshowImagePaths == null || slideshowImagePaths.size() == 0) {
                 System.out.println("No images defined for event with ID " + hilfsmittel.getId());
                 var missingImage = ImageIO.read(SlideShowComponentApp.class.getResourceAsStream("/images/missingimage.png"));
                 view.slideshow.setImageElements(new ImageElement[]{new ImageElement(missingImage, "/images/missingimage.png")});
                 return;
             }
 
-            var pathArray = paths.toArray(new String[0]);
+            var pathArray = slideshowImagePaths.toArray(new String[0]);
             for (var path : pathArray) {
                 System.out.println("Loading image from path: " + path);
             }

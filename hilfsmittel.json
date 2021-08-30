@@ -1,1 +1,24 @@
-[{"id":"test","name":"Grüner Stuhl","beschreibung":"asdfasdf","insgesamtVerfuegbar":330,"aktuellVerfuegbar":2,"tagList":["yes"],"bilder":["images/stick.jpg","C:\\Users\\thoma\\Pictures\\Cyberpunk 2077\\photomode_10122020_224613.png"]}]
+[
+  {
+    "id": "test",
+    "name": "Grüner Stuhl",
+    "beschreibung": "asdfasdf",
+    "insgesamtVerfuegbar": 330,
+    "tagList": [
+      "yes"
+    ],
+    "bilder": []
+  },
+  {
+    "id": "acfb8316-0f7b-4088-a621-e75f4e320506",
+    "name": "Blauer Tisch",
+    "insgesamtVerfuegbar": 1
+  },
+  {
+    "id": "7614f079-82c6-4a45-a06a-bfa71342b249",
+    "name": "Rote Tischdecke",
+    "beschreibung": "",
+    "insgesamtVerfuegbar": 1,
+    "bilder": []
+  }
+]
