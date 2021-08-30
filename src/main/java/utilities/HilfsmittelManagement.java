@@ -37,10 +37,10 @@ public class HilfsmittelManagement {
         }
     }
 
-    public void removeHilfsmittel(String id, Date endDate) {
+    public void removeHilfsmittel(String id, Date startDate, Date endDate) {
         HilfsmittelAssignment assignment = this.currentAssignments.get(id);
         Hilfsmittel h = this.entities.find(id);
-        assignment.remove(endDate);
+        assignment.remove(startDate, endDate);
         h.setAktuellVerfuegbar(h.getInsgesamtVerfuegbar() - assignment.getInUse());
     }
 

@@ -170,7 +170,7 @@ public class EventDetailController extends Controller<EventDetailView> {
 
             var zuweisungen = event.getZuweisungen();
             Zuweisung z = zuweisungen.get(selectedRow);
-            management.removeHilfsmittel(z.getHilfsmittel().getId(), this.event.getEnde());
+            management.removeHilfsmittel(z.getHilfsmittel().getId(), this.event.getStart(), this.event.getEnde());
             zuweisungen.remove(selectedRow);
 
             try {

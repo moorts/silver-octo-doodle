@@ -54,12 +54,12 @@ public class HilfsmittelAssignment {
         return out;
     }
 
-    public void remove(Date until) {
+    public void remove(Date from, Date until) {
         ArrayList<List<EventDuration>> remove = new ArrayList<>();
         for(List<EventDuration> reservations : this.reservationsList) {
             EventDuration delete = null;
             for(EventDuration duration : reservations) {
-                if(duration.getEnd().equals(until)) {
+                if(duration.getEnd().equals(until) && duration.getStart().equals(from)) {
                     delete = duration;
                 }
             }
