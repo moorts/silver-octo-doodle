@@ -42,7 +42,7 @@ public class EventEntityManager implements EntityManager<Event> {
 
     @Override
     public void remove(Event instance) {
-
+        allElements.remove(instance.getId());
     }
 
     @Override

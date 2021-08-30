@@ -18,7 +18,9 @@ public class MainMenuView extends View<MainMenuController> {
     public JTable eventTable;
     public JTable hilfsmittelTable;
     public JButton eventErstellenButton;
+    public JButton eventLoeschenButton;
     public JButton hilfsmittelErstellenButton;
+    public JButton hilfsmittelLoeschenButton;
 
     @Override
     public JPanel buildUI() {
@@ -41,6 +43,7 @@ public class MainMenuView extends View<MainMenuController> {
         panel.add(new JScrollPane(eventTable));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(eventLoeschenButton = new JButton("Ausgewähltes Event löschen"));
         buttonPanel.add(eventErstellenButton = new JButton("Neues Event erstellen"));
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -55,6 +58,7 @@ public class MainMenuView extends View<MainMenuController> {
         panel.add(new JScrollPane(hilfsmittelTable));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(hilfsmittelLoeschenButton = new JButton("Ausgewähltes Hilfsmittel löschen"));
         buttonPanel.add(hilfsmittelErstellenButton = new JButton("Neues Hilfsmittel erstellen"));
         panel.add(buttonPanel, BorderLayout.SOUTH);
 

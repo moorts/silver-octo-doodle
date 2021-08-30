@@ -81,27 +81,6 @@
     ]
   },
   {
-    "id": "abc1234",
-    "titel": "Toller Titel 2",
-    "beschreibung": "Nicht so tolle Beschreibung",
-    "kategorie": "Untergang",
-    "start": "Aug 15, 2021, 8:00:00 AM",
-    "ende": "Aug 16, 2021, 3:00:00 AM",
-    "erwarteteBesucherzahl": 0,
-    "budget": 0.0,
-    "status": "GEPLANT",
-    "bilder": [
-      "C:\\Users\\thoma\\Pictures\\Cyberpunk 2077\\photomode_10122020_224613.png"
-    ],
-    "kontakte": [
-      {
-        "name": "Name",
-        "email": "Email",
-        "telnr": "Telefon"
-      }
-    ]
-  },
-  {
     "id": "f34e2207-ad83-46e8-ad0f-ff564295c65a",
     "titel": "Hochzeit von Janina und Michael Hürtgen",
     "beschreibung": "Michael und Janina möchten im August kirchlich heiraten. Sie werden mit ungefähr 50 Personen feiern und hätten als Location gerne eine Diskothek.",

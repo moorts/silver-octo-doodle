@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class MainMenuController extends Controller<MainMenuView> {
 
@@ -21,7 +22,9 @@ public class MainMenuController extends Controller<MainMenuView> {
 
     @Override
     public void init() {
-        view.eventTable.setModel(new EventTableModel(this.application.getEventEntityManager().getAll()));
+        updateEventTableModel();
+        updateHilfsmittelTableModel();
+
         view.eventTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -35,7 +38,6 @@ public class MainMenuController extends Controller<MainMenuView> {
             }
         });
 
-        view.hilfsmittelTable.setModel(new HilfsmittelTableModel(this.application.getHilfsmittelEntityManager().getAll()));
         view.hilfsmittelTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -63,6 +65,21 @@ public class MainMenuController extends Controller<MainMenuView> {
             }
         });
 
+        view.eventLoeschenButton.addActionListener(e -> {
+            int selectedRow = view.eventTable.getSelectedRow();
+
+            if (selectedRow == -1) return;
+
+            if (JOptionPane.showConfirmDialog(null, "Möchten Sie das Event wirklich löschen?", "Sind Sie sicher?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                this.application.getEventEntityManager().remove(((EventTableModel)view.eventTable.getModel()).getRowAt(selectedRow));
+                try {
+                    this.application.getEventEntityManager().saveToJson();
+                    updateEventTableModel();
+                } catch (IOException ioException) {
+                }
+            }
+        });
+
         view.hilfsmittelErstellenButton.addActionListener(e -> {
             String name = JOptionPane.showInputDialog("Wie soll das neue Hilfsmittel heißen?");
             if (!name.isBlank()) {
@@ -76,6 +93,30 @@ public class MainMenuController extends Controller<MainMenuView> {
                 }
             }
         });
+
+        view.hilfsmittelLoeschenButton.addActionListener(e -> {
+            int selectedRow = view.hilfsmittelTable.getSelectedRow();
+
+            if (selectedRow == -1) return;
+
+            if (JOptionPane.showConfirmDialog(null, "Möchten Sie das Hilfsmittel wirklich löschen?", "Sind Sie sicher?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                this.application.getHilfsmittelEntityManager().remove(((HilfsmittelTableModel)view.hilfsmittelTable.getModel()).getRowAt(selectedRow));
+                try {
+                    this.application.getHilfsmittelEntityManager().saveToJson();
+                    updateHilfsmittelTableModel();
+                } catch (IOException ioException) {
+                }
+            }
+        });
     }
 
+    private void updateEventTableModel() {
+        view.eventTable.setModel(new EventTableModel(this.application.getEventEntityManager().getAll()));
+        view.eventTable.updateUI();
+    }
+
+    private void updateHilfsmittelTableModel() {
+        view.hilfsmittelTable.setModel(new HilfsmittelTableModel(this.application.getHilfsmittelEntityManager().getAll()));
+        view.hilfsmittelTable.updateUI();
+    }
 }
