@@ -71,16 +71,12 @@
     ],
     "zuweisungen": [
       {
-        "menge": 101,
+        "menge": 326,
         "hilfsmittelId": "test"
       },
       {
         "menge": 1,
         "hilfsmittelId": "acfb8316-0f7b-4088-a621-e75f4e320506"
-      },
-      {
-        "menge": 1,
-        "hilfsmittelId": "7614f079-82c6-4a45-a06a-bfa71342b249"
       }
     ]
   },

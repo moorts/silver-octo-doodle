@@ -126,6 +126,12 @@ public class EventDetailController extends Controller<EventDetailView> {
 
             for (Zuweisung zuweisung : zuweisungen) {
                 if (zuweisung.getHilfsmittel() == ausgewaehltesHilfsmittel) {
+
+                    if (zuweisung.getMenge() + ausgewaehlteMenge > ausgewaehltesHilfsmittel.getInsgesamtVerfuegbar()) {
+                        JOptionPane.showMessageDialog(null, "Es sind nicht genügend Hilfsmittel verfügbar!", "Fehler", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
                     zuweisung.setMenge(zuweisung.getMenge() + ausgewaehlteMenge);
 
                     try {
@@ -136,6 +142,11 @@ public class EventDetailController extends Controller<EventDetailView> {
                     }
                     return;
                 }
+            }
+
+            if (ausgewaehlteMenge > ausgewaehltesHilfsmittel.getInsgesamtVerfuegbar()) {
+                JOptionPane.showMessageDialog(null, "Es sind nicht genügend Hilfsmittel verfügbar!", "Fehler", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
             Zuweisung neueZuweisung = new Zuweisung();
