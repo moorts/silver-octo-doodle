@@ -1,5 +1,24 @@
 [
   {
+    "id": "607585d9-53c0-4d4f-91c8-65d1a0ab987a",
+    "titel": "dervogel",
+    "beschreibung": "asdfasdfafa",
+    "kategorie": "",
+    "start": "Aug 30, 2021, 8:18:00 PM",
+    "ende": "Aug 30, 2021, 8:18:00 PM",
+    "erwarteteBesucherzahl": 0,
+    "budget": 0.0,
+    "status": "ERSTELLT",
+    "bilder": [],
+    "kontakte": [],
+    "zuweisungen": [
+      {
+        "menge": 258,
+        "hilfsmittelId": "test"
+      }
+    ]
+  },
+  {
     "id": "47ed8aa7-890f-42c8-aaea-dbe9c7cebe38",
     "titel": "Test Event oder so",
     "beschreibung": "",
@@ -71,7 +90,7 @@
     ],
     "zuweisungen": [
       {
-        "menge": 12,
+        "menge": 60,
         "hilfsmittelId": "test"
       }
     ]
@@ -117,12 +136,8 @@
     ],
     "zuweisungen": [
       {
-        "menge": 22,
+        "menge": 23,
         "hilfsmittelId": "test"
-      },
-      {
-        "menge": 1,
-        "hilfsmittelId": "7614f079-82c6-4a45-a06a-bfa71342b249"
       }
     ]
   }

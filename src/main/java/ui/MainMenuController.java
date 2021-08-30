@@ -7,12 +7,14 @@ import model.factory.HilfsmittelFactory;
 import model.ui.EventTableModel;
 import model.ui.HilfsmittelTableModel;
 import ui.base.Controller;
+import utilities.HilfsmittelManagement;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Date;
 
 public class MainMenuController extends Controller<MainMenuView> {
 
@@ -116,6 +118,8 @@ public class MainMenuController extends Controller<MainMenuView> {
     }
 
     private void updateHilfsmittelTableModel() {
+        HilfsmittelManagement management = application.getHilfsmittelManagement();
+        management.updateHilfsmittel(new Date(), new Date());
         view.hilfsmittelTable.setModel(new HilfsmittelTableModel(this.application.getHilfsmittelEntityManager().getAll()));
         view.hilfsmittelTable.updateUI();
     }

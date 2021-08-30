@@ -6,6 +6,7 @@ import de.dhbwka.swe.utils.model.ImageElement;
 import de.dhbwka.swe.utils.util.ImageLoader;
 import model.Hilfsmittel;
 import ui.base.Controller;
+import utilities.HilfsmittelManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HilfsmittelDetailController extends Controller<HilfsmittelDetailView> {
@@ -75,6 +77,8 @@ public class HilfsmittelDetailController extends Controller<HilfsmittelDetailVie
     }
 
     private void updateBasicHilfsmittelData() {
+        HilfsmittelManagement management = application.getHilfsmittelManagement();
+        management.updateHilfsmittel(new Date(), new Date());
         loadImages();
         view.headerLabel.setText(String.format(LABEL_HEADER, hilfsmittel.getName()));
         view.anzahlAktuellLabel.setText(String.format(LABEL_CURRENT, hilfsmittel.getAktuellVerfuegbar()));

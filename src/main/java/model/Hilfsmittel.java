@@ -69,6 +69,6 @@ public class Hilfsmittel {
 
     @Override
     public String toString() {
-        return name + " (" + insgesamtVerfuegbar + ")";
+        return name + " (" + aktuellVerfuegbar + ")";
     }
 }

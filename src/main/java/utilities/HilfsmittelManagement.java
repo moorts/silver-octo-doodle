@@ -30,6 +30,13 @@ public class HilfsmittelManagement {
         }
     }
 
+    public void updateHilfsmittel(Date start, Date end) {
+        for(Hilfsmittel h : entities.getAll()) {
+            if(currentAssignments.containsKey(h.getId()))
+                h.setAktuellVerfuegbar(currentAssignments.get(h.getId()).getAvailable(start, end));
+        }
+    }
+
     public void removeHilfsmittel(String id, Date endDate) {
         HilfsmittelAssignment assignment = this.currentAssignments.get(id);
         Hilfsmittel h = this.entities.find(id);
@@ -45,7 +52,7 @@ public class HilfsmittelManagement {
         if(currentAssignments.containsKey(id)) {
             HilfsmittelAssignment assignments = currentAssignments.get(id);
             assignments.reserveNuntil(amount, startDate, endDate);
-            hilfsmittel.setAktuellVerfuegbar(hilfsmittel.getAktuellVerfuegbar() - amount);
+            hilfsmittel.setAktuellVerfuegbar(assignments.getAvailable(startDate, endDate));
             return;
         }
         HilfsmittelAssignment newAssignment = new HilfsmittelAssignment(hilfsmittel.getInsgesamtVerfuegbar());
@@ -61,7 +68,7 @@ public class HilfsmittelManagement {
         if(currentAssignments.containsKey(id)) {
             HilfsmittelAssignment assignments = currentAssignments.get(id);
             if(assignments.reserveNuntil(amount, startDate, endDate)) {
-                hilfsmittel.setAktuellVerfuegbar(hilfsmittel.getAktuellVerfuegbar() - amount);
+                hilfsmittel.setAktuellVerfuegbar(assignments.getAvailable(startDate, endDate));
                 return true;
             }
             return false;

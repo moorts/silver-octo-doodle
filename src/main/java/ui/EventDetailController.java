@@ -242,6 +242,8 @@ public class EventDetailController extends Controller<EventDetailView> {
         view.zuweisungsTable.setModel(new HilfsmittelZuweisungTableModel(zuweisungen));
         view.zuweisungsTable.updateUI();
 
+        HilfsmittelManagement management = application.getHilfsmittelManagement();
+        management.updateHilfsmittel(event.getStart(), event.getEnde());
         view.hilfsmittelComboBox.setModel(new DefaultComboBoxModel<>(application.getHilfsmittelEntityManager().getAll().toArray(new Hilfsmittel[0])));
     }
 
