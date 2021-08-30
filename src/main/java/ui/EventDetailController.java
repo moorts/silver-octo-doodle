@@ -9,6 +9,7 @@ import model.factory.EventElementFactory;
 import model.ui.HilfsmittelZuweisungTableModel;
 import model.ui.KontaktinformationenTableModel;
 import ui.base.Controller;
+import utilities.HilfsmittelManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -119,18 +120,18 @@ public class EventDetailController extends Controller<EventDetailView> {
         });
 
         view.zuweisenButton.addActionListener(e -> {
+            HilfsmittelManagement management = application.getHilfsmittelManagement();
             var ausgewaehltesHilfsmittel = (Hilfsmittel)view.hilfsmittelComboBox.getSelectedItem();
             var ausgewaehlteMenge = (int)view.hilfsmittelZuweisungSpinner.getValue();
+            if(!management.reserveHilfsmittel(ausgewaehltesHilfsmittel.getId(), ausgewaehlteMenge, this.event.getStart(), this.event.getEnde())) {
+                JOptionPane.showMessageDialog(null, "Es sind nicht genügend Hilfsmittel verfügbar!", "Fehler", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             var zuweisungen = event.getZuweisungen();
             if (zuweisungen == null) zuweisungen = new ArrayList<>();
 
             for (Zuweisung zuweisung : zuweisungen) {
                 if (zuweisung.getHilfsmittel() == ausgewaehltesHilfsmittel) {
-
-                    if (zuweisung.getMenge() + ausgewaehlteMenge > ausgewaehltesHilfsmittel.getInsgesamtVerfuegbar()) {
-                        JOptionPane.showMessageDialog(null, "Es sind nicht genügend Hilfsmittel verfügbar!", "Fehler", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
 
                     zuweisung.setMenge(zuweisung.getMenge() + ausgewaehlteMenge);
 
@@ -142,11 +143,6 @@ public class EventDetailController extends Controller<EventDetailView> {
                     }
                     return;
                 }
-            }
-
-            if (ausgewaehlteMenge > ausgewaehltesHilfsmittel.getInsgesamtVerfuegbar()) {
-                JOptionPane.showMessageDialog(null, "Es sind nicht genügend Hilfsmittel verfügbar!", "Fehler", JOptionPane.ERROR_MESSAGE);
-                return;
             }
 
             Zuweisung neueZuweisung = new Zuweisung();
@@ -166,12 +162,15 @@ public class EventDetailController extends Controller<EventDetailView> {
         });
 
         view.zuweisungLoeschenButton.addActionListener(e -> {
+            HilfsmittelManagement management = application.getHilfsmittelManagement();
             var selectedRow = view.zuweisungsTable.getSelectedRow();
 
             if (selectedRow == -1)
                 return;
 
             var zuweisungen = event.getZuweisungen();
+            Zuweisung z = zuweisungen.get(selectedRow);
+            management.removeHilfsmittel(z.getHilfsmittel().getId(), this.event.getEnde());
             zuweisungen.remove(selectedRow);
 
             try {

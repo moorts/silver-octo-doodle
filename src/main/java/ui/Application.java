@@ -5,6 +5,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import persistenz.HilfsmittelEntityManager;
 import persistenz.EventEntityManager;
 import ui.base.View;
+import utilities.HilfsmittelManagement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class Application {
     // Entity Managers
     private EventEntityManager eventEntityManager;
     private HilfsmittelEntityManager hilfsmittelEntityManager;
+    private HilfsmittelManagement hilfsmittelManagement;
 
     public static void main(String[] args) {
         try {
@@ -41,6 +43,11 @@ public class Application {
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 
         initializeEntityManagers();
+
+        this.hilfsmittelManagement = new HilfsmittelManagement(this.hilfsmittelEntityManager);
+        for(model.Event e : eventEntityManager.getAll()) {
+            hilfsmittelManagement.loadEvent(e);
+        }
 
         setView(new MainMenuView());
     }
@@ -83,5 +90,9 @@ public class Application {
 
     public HilfsmittelEntityManager getHilfsmittelEntityManager() {
         return hilfsmittelEntityManager;
+    }
+
+    public HilfsmittelManagement getHilfsmittelManagement() {
+        return hilfsmittelManagement;
     }
 }

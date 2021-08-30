@@ -51,8 +51,9 @@ public class HilfsmittelEntityManager implements EntityManager<Hilfsmittel> {
     public void loadFromJson() throws IOException {
         String fileContent = Files.readString(Paths.get("hilfsmittel.json"));
         Hilfsmittel[] hilfsmittel = gson.fromJson(fileContent, Hilfsmittel[].class);
-        for (Hilfsmittel event : hilfsmittel) {
-            this.allElements.put(event.getId(), event);
+        for (Hilfsmittel h : hilfsmittel) {
+            h.setAktuellVerfuegbar(h.getInsgesamtVerfuegbar());
+            this.allElements.put(h.getId(), h);
         }
     }
 
