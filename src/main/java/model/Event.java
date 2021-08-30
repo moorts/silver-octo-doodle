@@ -18,6 +18,7 @@ public class Event {
     private List<String> bilder;
     private List<Kontaktinformationen> kontakte;
     private List<TeilEvent> teilEvents;
+    private List<Zuweisung> zuweisungen;
 
     public double summiereKosten() {
         return 0;
@@ -125,5 +126,13 @@ public class Event {
 
     public void setTeilEvents(List<TeilEvent> teilEvents) {
         this.teilEvents = teilEvents;
+    }
+
+    public List<Zuweisung> getZuweisungen() {
+        return zuweisungen;
+    }
+
+    public void setZuweisungen(List<Zuweisung> zuweisungen) {
+        this.zuweisungen = zuweisungen;
     }
 }

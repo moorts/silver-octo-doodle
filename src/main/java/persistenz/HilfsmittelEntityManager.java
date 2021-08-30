@@ -1,6 +1,7 @@
 package persistenz;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.EntityManager;
 import model.Hilfsmittel;
 
@@ -12,9 +13,11 @@ import java.util.HashMap;
 
 public class HilfsmittelEntityManager implements EntityManager<Hilfsmittel> {
     private HashMap<String, Hilfsmittel> allElements;
+    private Gson gson;
 
     public HilfsmittelEntityManager() {
         this.allElements = new HashMap<>();
+        gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     @Override
@@ -31,7 +34,7 @@ public class HilfsmittelEntityManager implements EntityManager<Hilfsmittel> {
 
     @Override
     public Hilfsmittel find(String id) {
-        return null;
+        return allElements.getOrDefault(id, null);
     }
 
     @Override
@@ -46,7 +49,6 @@ public class HilfsmittelEntityManager implements EntityManager<Hilfsmittel> {
 
     @Override
     public void loadFromJson() throws IOException {
-        Gson gson = new Gson();
         String fileContent = Files.readString(Paths.get("hilfsmittel.json"));
         Hilfsmittel[] hilfsmittel = gson.fromJson(fileContent, Hilfsmittel[].class);
         for (Hilfsmittel event : hilfsmittel) {
@@ -56,7 +58,6 @@ public class HilfsmittelEntityManager implements EntityManager<Hilfsmittel> {
 
     @Override
     public void saveToJson() throws IOException {
-        Gson gson = new Gson();
         String json = gson.toJson(allElements.values().toArray(new Hilfsmittel[0]), Hilfsmittel[].class);
         Files.writeString(Paths.get("hilfsmittel.json"), json);
     }

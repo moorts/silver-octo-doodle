@@ -68,6 +68,12 @@
         "kosten": 0.0,
         "beschreibung": ""
       }
+    ],
+    "zuweisungen": [
+      {
+        "menge": 101,
+        "hilfsmittelId": "test"
+      }
     ]
   },
   {

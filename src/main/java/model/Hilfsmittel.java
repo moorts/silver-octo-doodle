@@ -7,7 +7,6 @@ public class Hilfsmittel {
     private String name;
     private String beschreibung;
     private int insgesamtVerfuegbar;
-    private int aktuellVerfuegbar;
     private List<String> tagList;
     private List<String> bilder;
 
@@ -52,11 +51,7 @@ public class Hilfsmittel {
     }
 
     public int getAktuellVerfuegbar() {
-        return aktuellVerfuegbar;
-    }
-
-    public void setAktuellVerfuegbar(int aktuellVerfuegbar) {
-        this.aktuellVerfuegbar = aktuellVerfuegbar;
+        return insgesamtVerfuegbar;
     }
 
     public List<String> getBilder() {
@@ -65,5 +60,10 @@ public class Hilfsmittel {
 
     public void setBilder(List<String> bilder) {
         this.bilder = bilder;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + insgesamtVerfuegbar + ")";
     }
 }

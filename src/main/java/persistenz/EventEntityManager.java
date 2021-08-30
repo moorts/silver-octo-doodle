@@ -37,7 +37,7 @@ public class EventEntityManager implements EntityManager<Event> {
 
     @Override
     public Event find(String id) {
-        return null;
+        return allElements.getOrDefault(id, null);
     }
 
     @Override

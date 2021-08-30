@@ -4,11 +4,9 @@ import de.dhbwka.swe.utils.app.SlideShowComponentApp;
 import de.dhbwka.swe.utils.gui.SlideshowComponent;
 import de.dhbwka.swe.utils.model.ImageElement;
 import de.dhbwka.swe.utils.util.ImageLoader;
-import model.ElementType;
-import model.Event;
-import model.Status;
-import model.TeilEvent;
+import model.*;
 import model.factory.EventElementFactory;
+import model.ui.HilfsmittelZuweisungTableModel;
 import model.ui.KontaktinformationenTableModel;
 import ui.base.Controller;
 
@@ -48,6 +46,7 @@ public class EventDetailController extends Controller<EventDetailView> {
         updateBasicEventData();
         updateEventDetails();
         updateEventElements();
+        updateEventHilfsmittel();
 
         view.backButton.addActionListener(e -> {
             application.setView(new MainMenuView());
@@ -118,6 +117,59 @@ public class EventDetailController extends Controller<EventDetailView> {
             }
             updateEventElements();
         });
+
+        view.zuweisenButton.addActionListener(e -> {
+            var ausgewaehltesHilfsmittel = (Hilfsmittel)view.hilfsmittelComboBox.getSelectedItem();
+            var ausgewaehlteMenge = (int)view.hilfsmittelZuweisungSpinner.getValue();
+            var zuweisungen = event.getZuweisungen();
+            if (zuweisungen == null) zuweisungen = new ArrayList<>();
+
+            for (Zuweisung zuweisung : zuweisungen) {
+                if (zuweisung.getHilfsmittel() == ausgewaehltesHilfsmittel) {
+                    zuweisung.setMenge(zuweisung.getMenge() + ausgewaehlteMenge);
+
+                    try {
+                        application.getEventEntityManager().saveToJson();
+                        updateEventHilfsmittel();
+                    } catch (IOException ioException) {
+                        System.out.println("Unable to save events.");
+                    }
+                    return;
+                }
+            }
+
+            Zuweisung neueZuweisung = new Zuweisung();
+            neueZuweisung.setMenge(ausgewaehlteMenge);
+            neueZuweisung.setHilfsmittelId(ausgewaehltesHilfsmittel.getId());
+
+            zuweisungen.add(neueZuweisung);
+
+            event.setZuweisungen(zuweisungen);
+
+            try {
+                application.getEventEntityManager().saveToJson();
+                updateEventHilfsmittel();
+            } catch (IOException ioException) {
+                System.out.println("Unable to save events.");
+            }
+        });
+
+        view.zuweisungLoeschenButton.addActionListener(e -> {
+            var selectedRow = view.zuweisungsTable.getSelectedRow();
+
+            if (selectedRow == -1)
+                return;
+
+            var zuweisungen = event.getZuweisungen();
+            zuweisungen.remove(selectedRow);
+
+            try {
+                application.getEventEntityManager().saveToJson();
+                updateEventHilfsmittel();
+            } catch (IOException ioException) {
+                System.out.println("Unable to save events.");
+            }
+        });
     }
 
     private void updateBasicEventData() {
@@ -167,6 +219,20 @@ public class EventDetailController extends Controller<EventDetailView> {
             }
         }
 
+    }
+
+    private void updateEventHilfsmittel() {
+        var zuweisungen = event.getZuweisungen();
+        if (zuweisungen == null) zuweisungen = new ArrayList<>();
+
+        for (Zuweisung zuweisung : zuweisungen) {
+            zuweisung.resolveId(application.getHilfsmittelEntityManager());
+        }
+
+        view.zuweisungsTable.setModel(new HilfsmittelZuweisungTableModel(zuweisungen));
+        view.zuweisungsTable.updateUI();
+
+        view.hilfsmittelComboBox.setModel(new DefaultComboBoxModel<>(application.getHilfsmittelEntityManager().getAll().toArray(new Hilfsmittel[0])));
     }
 
     private boolean isEventDetailsValid() {

@@ -25,7 +25,7 @@ public class Application {
         try {
             UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch( Exception ex ) {
-            System.err.println( "Failed to initialize LaF" );
+            System.err.println( "Failed to initialize Look and Feel" );
         }
         var gui = new Application();
     }
@@ -49,14 +49,14 @@ public class Application {
         eventEntityManager = new EventEntityManager();
         try {
             eventEntityManager.loadFromJson();
-            System.out.println("Successfully loaded " + eventEntityManager.getAll().size() + " events!");
+            System.out.println("Successfully loaded " + eventEntityManager.getAll().size() + " Events!");
         } catch (IOException e) {
             System.out.println("Unable to load events.json");
         }
         hilfsmittelEntityManager = new HilfsmittelEntityManager();
         try {
             hilfsmittelEntityManager.loadFromJson();
-            System.out.println("Successfully loaded " + hilfsmittelEntityManager.getAll().size() + " events!");
+            System.out.println("Successfully loaded " + hilfsmittelEntityManager.getAll().size() + " Hilfsmittel!");
         } catch (IOException e) {
             System.out.println("Unable to load hilfsmittel.json");
         }

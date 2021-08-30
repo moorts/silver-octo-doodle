@@ -1,29 +1,28 @@
 package model.ui;
 
-import model.Event;
-import model.Status;
+import model.Hilfsmittel;
+import model.Zuweisung;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
-public class EventTableModel implements TableModel {
+public class HilfsmittelZuweisungTableModel implements TableModel {
 
-    private static final String[] columns = new String[] { "Name", "Kategorie", "Status" };
-    private static final Class<?>[] columnTypes = new Class<?>[] { String.class, String.class, Status.class };
+    private static final String[] columns = new String[] { "Hilfsmittel", "Zugewiesen" };
+    private static final Class<?>[] columnTypes = new Class<?>[] { String.class, Integer.class };
 
-    public List<Event> events;
+    public List<Zuweisung> zuweisungen;
 
-    public EventTableModel(Collection<Event> events) {
-        this.events = new ArrayList<>(events);
+    public HilfsmittelZuweisungTableModel(Collection<Zuweisung> zuweisungen) {
+        this.zuweisungen = new ArrayList<>(zuweisungen);
     }
 
     @Override
     public int getRowCount() {
-        return events.size();
+        return this.zuweisungen.size();
     }
 
     @Override
@@ -49,12 +48,11 @@ public class EventTableModel implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 0: return events.get(rowIndex).getTitel();
-            case 1: return events.get(rowIndex).getKategorie();
-            case 2: return events.get(rowIndex).getStatus();
-            default:
-                return null;
+            case 0: return zuweisungen.get(rowIndex).getHilfsmittel().getName();
+            case 1: return zuweisungen.get(rowIndex).getMenge();
         }
+
+        return null;
     }
 
     @Override
@@ -70,9 +68,5 @@ public class EventTableModel implements TableModel {
     @Override
     public void removeTableModelListener(TableModelListener l) {
 
-    }
-
-    public Event getRowAt(int rowIndex) {
-        return events.get(rowIndex);
     }
 }

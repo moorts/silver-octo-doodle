@@ -1,10 +1,8 @@
 package ui;
 
 import de.dhbwka.swe.utils.gui.SlideshowComponent;
-import model.ElementType;
+import model.*;
 import model.Event;
-import model.Status;
-import model.TeilEvent;
 import ui.base.View;
 
 import javax.swing.*;
@@ -41,6 +39,12 @@ public class EventDetailView extends View<EventDetailController> {
     public JTextField endeTextField;
     public JButton bildHinzufuegenButton;
     public JButton bildLoeschenButton;
+
+    public JTable zuweisungsTable;
+    public JComboBox<Hilfsmittel> hilfsmittelComboBox;
+    public JSpinner hilfsmittelZuweisungSpinner;
+    public JButton zuweisenButton;
+    public JButton zuweisungLoeschenButton;
 
     public JButton elementHinzufuegenButton;
     public JComboBox<ElementType> elementHinzufuegenCombobox;
@@ -132,19 +136,43 @@ public class EventDetailView extends View<EventDetailController> {
         var tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Elemente", buildElementeTab());
         tabbedPane.addTab("Details", buildDetailsTab());
-        tabbedPane.addTab("Kosten", buildKostenTab());
         tabbedPane.addTab("Hilfsmittel", buildHilfsmittelTab());
         panel.add(tabbedPane);
         return panel;
     }
 
     private JPanel buildHilfsmittelTab() {
-        JPanel panel = new JPanel();
-        return panel;
-    }
+        JPanel panel = new JPanel(new GridLayout(1, 2));
 
-    private JPanel buildKostenTab() {
-        JPanel panel = new JPanel();
+        zuweisungsTable = new JTable();
+        panel.add(new JScrollPane(zuweisungsTable));
+
+        JPanel zuweisungMenu = new JPanel();
+        zuweisungMenu.setLayout(new BoxLayout(zuweisungMenu, BoxLayout.Y_AXIS));
+        zuweisungMenu.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        zuweisungMenu.add(new JLabel("Verfügbare Hilfsmittel:"));
+        zuweisungMenu.add(hilfsmittelComboBox = new JComboBox<Hilfsmittel>());
+        hilfsmittelComboBox.setMaximumSize(new Dimension(Integer.MAX_VALUE, hilfsmittelComboBox.getPreferredSize().height));
+        hilfsmittelComboBox.setAlignmentX(0f);
+
+        zuweisungMenu.add(Box.createVerticalStrut(10));
+
+        zuweisungMenu.add(new JLabel("Wie viele sollen zugewiesen werden?"));
+        zuweisungMenu.add(hilfsmittelZuweisungSpinner = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1)));
+        hilfsmittelZuweisungSpinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, hilfsmittelZuweisungSpinner.getPreferredSize().height));
+        hilfsmittelZuweisungSpinner.setAlignmentX(0f);
+
+        zuweisungMenu.add(Box.createVerticalStrut(10));
+
+        zuweisungMenu.add(zuweisenButton = new JButton("Hilfsmittel zuweisen"));
+
+        zuweisungMenu.add(Box.createVerticalStrut(10));
+
+        zuweisungMenu.add(zuweisungLoeschenButton = new JButton("Ausgewählte Zuweisung löschen"));
+
+        panel.add(zuweisungMenu);
+
         return panel;
     }
 
